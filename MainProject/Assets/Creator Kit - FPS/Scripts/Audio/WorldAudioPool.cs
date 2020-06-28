@@ -15,7 +15,7 @@ public class WorldAudioPool : MonoBehaviour
 
     public static void Init()
     {
-        PoolSystem.Instance.InitPool(s_Instance.WorldSFXSourcePrefab, 32);
+        PoolSystem.Instance.InitPool(s_Instance.WorldSFXSourcePrefab, 1);
     }
     
     public static AudioSource GetWorldSFXSource()
