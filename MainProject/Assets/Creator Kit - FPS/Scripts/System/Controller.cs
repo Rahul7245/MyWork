@@ -139,24 +139,24 @@ public class Controller : MonoBehaviour
         if (!m_IsPaused && !LockControl)
         {
             // Jump (we do it first as 
-            if (m_Grounded && Input.GetButtonDown("Jump"))
+           /* if (m_Grounded && Input.GetButtonDown("Jump"))
             {
                 m_VerticalSpeed = JumpSpeed;
                 m_Grounded = false;
                 loosedGrounding = true;
                 FootstepPlayer.PlayClip(JumpingAudioCLip, 0.8f,1.1f);
-            }
+            }*/
             
-            bool running = m_Weapons[m_CurrentWeapon].CurrentState == Weapon.WeaponState.Idle && Input.GetButton("Run");
-            float actualSpeed = running ? RunningSpeed : PlayerSpeed;
+           // bool running = m_Weapons[m_CurrentWeapon].CurrentState == Weapon.WeaponState.Idle && Input.GetButton("Run");
+            //float actualSpeed = running ? RunningSpeed : PlayerSpeed;
 
-            if (loosedGrounding)
+            /*if (loosedGrounding)
             {
                 m_SpeedAtJump = actualSpeed;
-            }
+            }*/
 
             // Move around with WASD
-            move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
+           /*move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
             if (move.sqrMagnitude > 1.0f)
                 move.Normalize();
 
@@ -165,7 +165,7 @@ public class Controller : MonoBehaviour
             move = move * usedSpeed * Time.deltaTime;
             
             move = transform.TransformDirection(move);
-            m_CharacterController.Move(move);
+            m_CharacterController.Move(move);*/
             
             // Turn player
             float turnPlayer =  Input.GetAxis("Mouse X") * MouseSensitivity;
@@ -190,7 +190,7 @@ public class Controller : MonoBehaviour
 
             Speed = move.magnitude / (PlayerSpeed * Time.deltaTime);
 
-            if (Input.GetButton("Reload"))
+          /*  if (Input.GetButton("Reload"))
                 m_Weapons[m_CurrentWeapon].Reload();
 
             if (Input.GetAxis("Mouse ScrollWheel") < 0)
@@ -200,11 +200,11 @@ public class Controller : MonoBehaviour
             else if (Input.GetAxis("Mouse ScrollWheel") > 0)
             {
                 ChangeWeapon(m_CurrentWeapon + 1);
-            }
+            }*/
             
             //Key input to change weapon
 
-            for (int i = 0; i < 10; ++i)
+           /* for (int i = 0; i < 10; ++i)
             {
                 if (Input.GetKeyDown(KeyCode.Alpha0 + i))
                 {
@@ -219,7 +219,7 @@ public class Controller : MonoBehaviour
                         ChangeWeapon(num);
                     }
                 }
-            }
+            }*/
         }
 
         // Fall down / gravity

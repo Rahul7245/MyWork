@@ -28,17 +28,18 @@ public class Weapon : MonoBehaviour
     {
         Idle,
         Firing,
-        Reloading
+        Reloading,
+        Scope
     }
-
+    
     [System.Serializable]
+
     public class AdvancedSettings
     {
         public float spreadAngle = 0.0f;
         public int projectilePerShot = 1;
         public float screenShakeMultiplier = 1.0f;
     }
-
     public TriggerType triggerType = TriggerType.Manual;
     public WeaponType weaponType = WeaponType.Raycast;
     public float fireRate = 0.5f;
@@ -69,6 +70,8 @@ public class Weapon : MonoBehaviour
     
     [Header("Visual Display")]
     public AmmoDisplay AmmoDisplay;
+    
+
 
     public bool triggerDown
     {
@@ -79,7 +82,7 @@ public class Weapon : MonoBehaviour
             if (!m_TriggerDown) m_ShotDone = false;
         }
     }
-
+    public bool m_scoped = false;
     public WeaponState CurrentState => m_CurrentState;
     public int ClipContent => m_ClipContent;
     public Controller Owner => m_Owner;
@@ -109,17 +112,21 @@ public class Weapon : MonoBehaviour
     Queue<Projectile> m_ProjectilePool = new Queue<Projectile>();
     
     int fireNameHash = Animator.StringToHash("fire");
-    int reloadNameHash = Animator.StringToHash("reload");     
-
+    int reloadNameHash = Animator.StringToHash("reload");
+    public GameObject scopeOvrlay;
     void Awake()
     {
+        scopeOvrlay = GameObject.FindGameObjectWithTag("scopeOverLay");
+        if (scopeOvrlay) {
+            scopeOvrlay.SetActive(false);
+        }
         m_Animator = GetComponentInChildren<Animator>();
         m_Source = GetComponentInChildren<AudioSource>();
         m_ClipContent = clipSize;
 
         if (PrefabRayTrail != null)
         {
-            const int trailPoolSize = 16;
+             int trailPoolSize = m_ClipContent;
             PoolSystem.Instance.InitPool(PrefabRayTrail, trailPoolSize);
         }
 
@@ -395,7 +402,17 @@ public class Weapon : MonoBehaviour
                     Reload();
             }
         }
-
+        if (Input.GetButtonDown("Fire2")) {
+            print(m_Animator.GetBool("scope"));
+            m_Animator.SetBool("scope", !m_Animator.GetBool("scope"));
+            if (m_Animator.GetBool("scope"))
+                StartCoroutine(ScopeEnable());
+            else {
+                scopeOvrlay.SetActive(false);
+                Controller.Instance.MainCamera.fieldOfView = 60;
+                Controller.Instance.WeaponCamera.gameObject.SetActive(true);
+            }
+        }
         if (triggerDown)
         {
             if (triggerType == TriggerType.Manual)
@@ -410,7 +427,14 @@ public class Weapon : MonoBehaviour
                 Fire();
         }
     }
-    
+    IEnumerator ScopeEnable() { 
+    yield return new WaitForSeconds(1.8f);
+        scopeOvrlay.SetActive(true);
+        Controller.Instance.WeaponCamera.gameObject.SetActive(false);
+        Controller.Instance.MainCamera.fieldOfView = 20;
+
+
+    }
     /// <summary>
     /// This will compute the corrected position of the muzzle flash in world space. Since the weapon camera use a
     /// different FOV than the main camera, using the muzzle spot to spawn thing rendered by the main camera will appear

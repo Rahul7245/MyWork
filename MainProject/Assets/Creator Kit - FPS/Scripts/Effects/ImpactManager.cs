@@ -30,10 +30,10 @@ public class ImpactManager : MonoBehaviour
 
     void Start()
     {
-        PoolSystem.Instance.InitPool(DefaultSettings.ParticlePrefab, 32);
+       // PoolSystem.Instance.InitPool(DefaultSettings.ParticlePrefab, 3);
         foreach (var impactSettings in ImpactSettings)
         {
-            PoolSystem.Instance.InitPool(impactSettings.ParticlePrefab, 32);
+            PoolSystem.Instance.InitPool(impactSettings.ParticlePrefab, 1);
             m_SettingLookup.Add(impactSettings.TargetMaterial, impactSettings);
         }
     }
@@ -43,7 +43,7 @@ public class ImpactManager : MonoBehaviour
         ImpactSetting setting = null;
         if (material == null || !m_SettingLookup.TryGetValue(material, out setting))
         {
-            setting = DefaultSettings;
+            setting = ImpactSettings[0];
         }
         
         var sys =  PoolSystem.Instance.GetInstance<ParticleSystem>(setting.ParticlePrefab);
