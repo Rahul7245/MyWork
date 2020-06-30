@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/Scenes/SampleFPSScene.unity
+- path: Assets/NavigationCustom/Project/Scenes/Game.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0
