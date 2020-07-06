@@ -39,6 +39,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 9114194049139568169}
     m_Modifications:
+    - target: {fileID: 1782824341984044421, guid: 6ca000ead671ebe449deb210e0a19be8,
+        type: 3}
+      propertyPath: m_TagString
+      value: WeaponCamera
+      objectReference: {fileID: 0}
     - target: {fileID: 1782824343737523952, guid: 6ca000ead671ebe449deb210e0a19be8,
         type: 3}
       propertyPath: startingWeapons.Array.size
@@ -47,13 +52,13 @@ PrefabInstance:
     - target: {fileID: 1782824343737523952, guid: 6ca000ead671ebe449deb210e0a19be8,
         type: 3}
       propertyPath: startingAmmo.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1782824343737523952, guid: 6ca000ead671ebe449deb210e0a19be8,
         type: 3}
       propertyPath: startingWeapons.Array.data[0]
       value: 
-      objectReference: {fileID: 521019951643201760, guid: a7112150bc902aa40a065439ad698c01,
+      objectReference: {fileID: 5022459054615368871, guid: 2f3f912776ccac149aaed938b87e84f8,
         type: 3}
     - target: {fileID: 1782824343737523953, guid: 6ca000ead671ebe449deb210e0a19be8,
         type: 3}

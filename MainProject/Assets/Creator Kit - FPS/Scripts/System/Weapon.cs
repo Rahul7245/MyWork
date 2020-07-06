@@ -66,11 +66,17 @@ public class Weapon : MonoBehaviour
     public AudioClip ReloadAudioClip;
     
     [Header("Visual Settings")]
-    public LineRenderer PrefabRayTrail;
+    public GameObject PrefabRayTrail;
+    
     
     [Header("Visual Display")]
     public AmmoDisplay AmmoDisplay;
+
+    [Header("GameObject")]
+    public GameObject Bullet;
+
     
+
 
 
     public bool triggerDown
@@ -106,9 +112,17 @@ public class Weapon : MonoBehaviour
         public Vector3 direction;
         public float remainingTime;
     }
-    
+    class ActiveBullets
+    {
+        public GameObject bul;
+        public Vector3 direction;
+        public float remainingTime;
+    }
+
     List<ActiveTrail> m_ActiveTrails = new List<ActiveTrail>();
-    
+
+    List<ActiveBullets> m_ActiveBullets = new List<ActiveBullets>();
+
     Queue<Projectile> m_ProjectilePool = new Queue<Projectile>();
     
     int fireNameHash = Animator.StringToHash("fire");
@@ -124,12 +138,15 @@ public class Weapon : MonoBehaviour
         m_Source = GetComponentInChildren<AudioSource>();
         m_ClipContent = clipSize;
 
-        if (PrefabRayTrail != null)
+        /*if (PrefabRayTrail != null)
         {
              int trailPoolSize = m_ClipContent;
             PoolSystem.Instance.InitPool(PrefabRayTrail, trailPoolSize);
+        }*/
+        if (Bullet != null) {
+            int bulletPoolSize = 1;
+            PoolSystem.Instance.InitPool(Bullet, bulletPoolSize);
         }
-
         if (projectilePrefab != null)
         {
             //a minimum of 4 is useful for weapon that have a clip size of 1 and where you can throw a second
@@ -247,7 +264,7 @@ public class Weapon : MonoBehaviour
         //compute the ratio of our spread angle over the fov to know in viewport space what is the possible offset from center
         float spreadRatio = advancedSettings.spreadAngle / Controller.Instance.MainCamera.fieldOfView;
 
-        Vector2 spread = spreadRatio * Random.insideUnitCircle;
+        Vector2 spread = new Vector2(0, 0); /*spreadRatio * Random.insideUnitCircle*/;
         
         RaycastHit hit;
         Ray r = Controller.Instance.MainCamera.ViewportPointToRay(Vector3.one * 0.5f + (Vector3)spread);
@@ -256,7 +273,8 @@ public class Weapon : MonoBehaviour
         if (Physics.Raycast(r, out hit, 1000.0f, ~(1 << 9), QueryTriggerInteraction.Ignore))
         {
             Renderer renderer = hit.collider.GetComponentInChildren<Renderer>();
-            ImpactManager.Instance.PlayImpact(hit.point, hit.normal, renderer == null ? null : renderer.sharedMaterial);
+            ImpactManager im= ImpactManager.Instance;
+            im.ImpactData(hit.point, hit.normal, renderer == null ? null : renderer.sharedMaterial);
 
             //if too close, the trail effect would look weird if it arced to hit the wall, so only correct it if far
             if (hit.distance > 5.0f)
@@ -270,20 +288,36 @@ public class Weapon : MonoBehaviour
             }
         }
 
+       if (Bullet != null)
+        {
+            var pos = new Vector3[] { GetCorrectedMuzzlePlace(), hitPosition };
+            var bullet = PoolSystem.Instance.GetInstance<GameObject>(Bullet);
+            bullet.SetActive(true);
+            bullet.transform.position = pos[0];
+            m_ActiveBullets.Add(new ActiveBullets()
+            {
+                remainingTime = 5f,
+                direction = (pos[1] - pos[0]).normalized,
+                bul = bullet
+            });
+            bullet.GetComponent<Rigidbody>().AddForce(transform.forward * 100, ForceMode.Impulse);
 
-        if (PrefabRayTrail != null)
+
+        }
+        /*if (PrefabRayTrail != null)
         {
             var pos = new Vector3[] { GetCorrectedMuzzlePlace(), hitPosition };
             var trail = PoolSystem.Instance.GetInstance<LineRenderer>(PrefabRayTrail);
             trail.gameObject.SetActive(true);
             trail.SetPositions(pos);
+            
             m_ActiveTrails.Add(new ActiveTrail()
             {
                 remainingTime = 0.3f,
                 direction = (pos[1] - pos[0]).normalized,
                 renderer = trail
             });
-        }
+        }*/
     }
 
     void ProjectileShot()
@@ -354,7 +388,7 @@ public class Weapon : MonoBehaviour
         if (m_ShotTimer > 0)
             m_ShotTimer -= Time.deltaTime;
 
-        Vector3[] pos = new Vector3[2];
+        /*Vector3[] pos = new Vector3[2];
         for (int i = 0; i < m_ActiveTrails.Count; ++i)
         {
             var activeTrail = m_ActiveTrails[i];
@@ -371,6 +405,28 @@ public class Weapon : MonoBehaviour
             {
                 m_ActiveTrails[i].renderer.gameObject.SetActive(false);
                 m_ActiveTrails.RemoveAt(i);
+                i--;
+            }
+        }*/
+        Vector3[] pos = new Vector3[2];
+        for (int i = 0; i < m_ActiveBullets.Count; ++i)
+        {
+            /*var activeTrail = m_ActiveBullets[i];
+
+            activeTrail.GetPositions(pos);
+            activeTrail.remainingTime -= Time.deltaTime;
+
+            pos[0] += activeTrail.direction * 50.0f * Time.deltaTime;
+            pos[1] += activeTrail.direction * 50.0f * Time.deltaTime;
+
+            m_ActiveBullets[i].renderer.SetPositions(pos);*/
+            var activeBullet = m_ActiveBullets[i];
+           
+            activeBullet.remainingTime -= Time.deltaTime;
+            if (m_ActiveBullets[i].remainingTime <= 0.0f)
+            {
+                m_ActiveBullets[i].bul.gameObject.SetActive(false);
+                m_ActiveBullets.RemoveAt(i);
                 i--;
             }
         }
@@ -521,8 +577,9 @@ public class WeaponEditor : Editor
    SerializedProperty m_ReloadAudioClipProp;
    SerializedProperty m_PrefabRayTrailProp;
    SerializedProperty m_AmmoDisplayProp;
+    SerializedProperty m_bullet;
 
-   void OnEnable()
+    void OnEnable()
    {
        m_TriggerTypeProp = serializedObject.FindProperty("triggerType");
        m_WeaponTypeProp = serializedObject.FindProperty("weaponType");
@@ -541,7 +598,8 @@ public class WeaponEditor : Editor
        m_ReloadAudioClipProp = serializedObject.FindProperty("ReloadAudioClip");
        m_PrefabRayTrailProp = serializedObject.FindProperty("PrefabRayTrail");
        m_AmmoDisplayProp = serializedObject.FindProperty("AmmoDisplay");
-   }
+        m_bullet = serializedObject.FindProperty("Bullet");
+    }
 
    public override void OnInspectorGUI()
     {
@@ -574,6 +632,7 @@ public class WeaponEditor : Editor
         }
 
         EditorGUILayout.PropertyField(m_AmmoDisplayProp);
+        EditorGUILayout.PropertyField(m_bullet);
 
         serializedObject.ApplyModifiedProperties();
     }

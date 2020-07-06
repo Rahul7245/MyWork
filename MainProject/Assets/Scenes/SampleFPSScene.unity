@@ -463,27 +463,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 7404413090228727330, guid: bef1b92e9dba93e46a08c01dc557fc8b,
-        type: 3}
-      propertyPath: m_TagString
-      value: WeaponCamera
-      objectReference: {fileID: 0}
-    - target: {fileID: 7404413090622723415, guid: bef1b92e9dba93e46a08c01dc557fc8b,
-        type: 3}
-      propertyPath: startingAmmo.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7404413090622723415, guid: bef1b92e9dba93e46a08c01dc557fc8b,
-        type: 3}
-      propertyPath: startingAmmo.Array.data[0].amount
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7404413090622723415, guid: bef1b92e9dba93e46a08c01dc557fc8b,
-        type: 3}
-      propertyPath: startingWeapons.Array.data[0]
-      value: 
-      objectReference: {fileID: 5022459054615368871, guid: 2f3f912776ccac149aaed938b87e84f8,
-        type: 3}
     - target: {fileID: 9114194049139568168, guid: bef1b92e9dba93e46a08c01dc557fc8b,
         type: 3}
       propertyPath: m_Name

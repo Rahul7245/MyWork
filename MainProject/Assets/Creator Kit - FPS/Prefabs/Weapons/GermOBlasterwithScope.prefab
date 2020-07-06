@@ -232,16 +232,17 @@ MonoBehaviour:
   advancedSettings:
     spreadAngle: 2
     projectilePerShot: 1
-    screenShakeMultiplier: 10
+    screenShakeMultiplier: 1
   FireAnimationClip: {fileID: 7400006, guid: 36622a955330bc346a249a1e63e61d2a, type: 3}
   ReloadAnimationClip: {fileID: 7400008, guid: 36622a955330bc346a249a1e63e61d2a, type: 3}
-  scopeOverlay: {fileID: 0}
   FireAudioClip: {fileID: 8300000, guid: 79c781879da4b6c4f8c7cd79fd034759, type: 3}
   ReloadAudioClip: {fileID: 8300000, guid: 53b8e7c6ac6cd6d49977438b25dacfc7, type: 3}
-  PrefabRayTrail: {fileID: 1691346627199228128, guid: bc513dca9b359aa49aac8365c74ad13d,
+  PrefabRayTrail: {fileID: 722552984019620518, guid: bc513dca9b359aa49aac8365c74ad13d,
     type: 3}
   AmmoDisplay: {fileID: 6353695731309157228}
+  Bullet: {fileID: 2862430948841615621, guid: fc8819e5934cdc2498a79a71519c124c, type: 3}
   m_scoped: 0
+  scopeOvrlay: {fileID: 0}
 --- !u!82 &9140259836400675193
 AudioSource:
   m_ObjectHideFlags: 0
