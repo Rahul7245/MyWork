@@ -84,12 +84,18 @@
     <Compile Include="Assets\Creator Kit - FPS\Scripts\Minimap\MinimapElement.cs" />
     <Compile Include="Assets\Creator Kit - FPS\Scripts\Minimap\MinimapSystem.cs" />
     <Compile Include="Assets\Creator Kit - FPS\Scripts\System\AmmoBox.cs" />
+    <Compile Include="Assets\Creator Kit - FPS\Scripts\System\Burgler.cs" />
     <Compile Include="Assets\Creator Kit - FPS\Scripts\System\Controller.cs" />
     <Compile Include="Assets\Creator Kit - FPS\Scripts\System\EndCheckpoint.cs" />
+    <Compile Include="Assets\Creator Kit - FPS\Scripts\System\EventManager.cs" />
     <Compile Include="Assets\Creator Kit - FPS\Scripts\System\GameSystem.cs" />
     <Compile Include="Assets\Creator Kit - FPS\Scripts\System\PoolSystem.cs" />
     <Compile Include="Assets\Creator Kit - FPS\Scripts\System\Projectile.cs" />
+    <Compile Include="Assets\Creator Kit - FPS\Scripts\System\ResetWeapon.cs" />
+    <Compile Include="Assets\Creator Kit - FPS\Scripts\System\ShotEvent.cs" />
     <Compile Include="Assets\Creator Kit - FPS\Scripts\System\StartCheckpoint.cs" />
+    <Compile Include="Assets\Creator Kit - FPS\Scripts\System\SwitchCamera.cs" />
+    <Compile Include="Assets\Creator Kit - FPS\Scripts\System\SwitchCameraEvent.cs" />
     <Compile Include="Assets\Creator Kit - FPS\Scripts\System\Target.cs" />
     <Compile Include="Assets\Creator Kit - FPS\Scripts\System\TargetSpawner.cs" />
     <Compile Include="Assets\Creator Kit - FPS\Scripts\System\Weapon.cs" />
@@ -107,11 +113,20 @@
     <Compile Include="Assets\Creator Kit - FPS\Scripts\UI\PauseMenu.cs" />
     <Compile Include="Assets\Creator Kit - FPS\Scripts\UI\RestartLevel.cs" />
     <Compile Include="Assets\Creator Kit - FPS\Scripts\UI\WeaponInfoUI.cs" />
+    <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModuleAudio.cs" />
+    <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModulePhysics.cs" />
+    <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModulePhysics2D.cs" />
+    <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModuleSprite.cs" />
+    <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModuleUI.cs" />
+    <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModuleUnityVersion.cs" />
+    <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModuleUtils.cs" />
     <Compile Include="Assets\NavigationCustom\Project\Scripts\CustomAgent.cs" />
+    <Compile Include="Assets\Scripts\TrackSpawner.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
     <None Include="Assets\Creator Kit - FPS\Art\Shaders\Fleisch.shader" />
     <None Include="Assets\Creator Kit - FPS\Art\Shaders\LiquidContent.shader" />
     <None Include="Assets\Creator Kit - FPS\Art\Shaders\MapShader.shader" />
+    <None Include="Assets\Demigiant\DOTween\readme.txt" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.1f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
@@ -294,6 +309,9 @@
     </Reference>
     <Reference Include="UnityEditor">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.1f1/Editor/Data/Managed/UnityEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween">
+      <HintPath>D:/HatsOnGame/MyWork/MainProject/Assets/Demigiant/DOTween/DOTween.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.Editor">
       <HintPath>D:/HatsOnGame/MyWork/MainProject/Library/PackageCache/com.unity.analytics@3.3.5/Unity.Analytics.Editor.dll</HintPath>
