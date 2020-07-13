@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
+//using System;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -159,8 +160,13 @@ public class Weapon : MonoBehaviour
                 m_ProjectilePool.Enqueue(p);
             }
         }
+        
     }
-
+    private void Start()
+    {
+        print("this is called");
+        EventManager.AddReloadWeapontListener(Reset);
+    }
     public void PickedUp(Controller c)
     {
         m_Owner = c;
@@ -222,6 +228,7 @@ public class Weapon : MonoBehaviour
 
     public void Fire()
     {
+      //  print("m_ClipContent::" + m_ClipContent);
         if (m_CurrentState != WeaponState.Idle || m_ShotTimer > 0 || m_ClipContent == 0)
             return;
         
@@ -274,7 +281,14 @@ public class Weapon : MonoBehaviour
         {
             Renderer renderer = hit.collider.GetComponentInChildren<Renderer>();
             ImpactManager im= ImpactManager.Instance;
-            im.ImpactData(hit.point, hit.normal, renderer == null ? null : renderer.sharedMaterial);
+            if (hit.transform.gameObject.tag == "Burgler")
+            {
+                im.ImpactData(hit.point, hit.normal, renderer == null ? null : renderer.sharedMaterial);
+
+                im.InvokeTheEvent(hit.transform.gameObject.GetComponent<Burgler>().getValue());
+
+            }
+           
 
             //if too close, the trail effect would look weird if it arced to hit the wall, so only correct it if far
             if (hit.distance > 5.0f)
@@ -353,7 +367,7 @@ public class Weapon : MonoBehaviour
         if (remainingBullet == 0)
         {
             //No more bullet, so we disable the gun so it's not displayed anymore and change weapon
-            gameObject.SetActive(false);
+         //   gameObject.SetActive(false);
             return;
         }
 
@@ -380,7 +394,14 @@ public class Weapon : MonoBehaviour
         
         WeaponInfoUI.Instance.UpdateClipInfo(this);
     }
+    public void Reset() {
+        print("it is called");
+        m_ClipContent=3;
 
+        if (AmmoDisplay)
+            AmmoDisplay.UpdateAmount(m_ClipContent, clipSize);
+        WeaponInfoUI.Instance.UpdateClipInfo(this);
+    }
     void Update()
     {
         UpdateControllerState();        
@@ -471,7 +492,7 @@ public class Weapon : MonoBehaviour
         }
         if (triggerDown)
         {
-            if (triggerType == TriggerType.Manual)
+            if (triggerType == TriggerType.Auto)
             {
                 if (!m_ShotDone)
                 {

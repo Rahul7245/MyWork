@@ -7,6 +7,7 @@ TagManager:
   - scopeOverLay
   - WeaponCamera
   - Burgler
+  - Weapon
   layers:
   - Default
   - TransparentFX
