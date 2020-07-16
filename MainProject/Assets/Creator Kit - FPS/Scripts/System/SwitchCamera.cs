@@ -12,6 +12,7 @@ public class SwitchCamera : MonoBehaviour
         ShootCameraEnable(false);
     }
    public void ShootCameraEnable(bool isShootCameraActive) {
+
         if (isShootCameraActive) {
             shootScene.SetActive(true);
             birdViewCamera.SetActive(false);
