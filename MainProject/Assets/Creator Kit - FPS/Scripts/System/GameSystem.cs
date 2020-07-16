@@ -77,7 +77,7 @@ public class GameSystem : MonoBehaviour
         }
 #endif
         
-        GameSystemInfo.Instance.UpdateTimer(0);
+       // GameSystemInfo.Instance.UpdateTimer(0);
     }
 
     public void ResetTimer()
@@ -169,8 +169,8 @@ public class GameSystem : MonoBehaviour
         m_TargetDestroyed = 0;
         m_Score = 0;
 
-        GameSystemInfo.Instance.UpdateScore(0);
-        LevelSelectionUI.Instance.Init();
+       // GameSystemInfo.Instance.UpdateScore(0);
+       // LevelSelectionUI.Instance.Init();
     }
 
     void Update()
@@ -186,10 +186,10 @@ public class GameSystem : MonoBehaviour
         
         
         //UI Update
-        MinimapUI.Instance.UpdateForPlayerTransform(playerTransform);
+      //  MinimapUI.Instance.UpdateForPlayerTransform(playerTransform);
        
-        if(FullscreenMap.Instance.gameObject.activeSelf)
-            FullscreenMap.Instance.UpdateForPlayerTransform(playerTransform);
+       // if(FullscreenMap.Instance.gameObject.activeSelf)
+         //   FullscreenMap.Instance.UpdateForPlayerTransform(playerTransform);
     }
 
     public float GetFinalTime()

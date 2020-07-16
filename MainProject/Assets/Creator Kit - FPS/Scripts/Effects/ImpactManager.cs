@@ -89,6 +89,7 @@ public class ImpactManager : MonoBehaviour
         source.PlayOneShot(setting.ImpactSound);
     }
    public void AddShotEventListener(UnityAction<int> listener) {
+        print("AddShotEventListener");
         shotEvent.AddListener(listener);
     }
     public void AddSwitchListener(UnityAction<bool> listener)

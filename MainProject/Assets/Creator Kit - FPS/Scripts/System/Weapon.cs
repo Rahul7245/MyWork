@@ -164,7 +164,7 @@ public class Weapon : MonoBehaviour
     }
     private void Start()
     {
-        print("this is called");
+
         EventManager.AddReloadWeapontListener(Reset);
     }
     public void PickedUp(Controller c)

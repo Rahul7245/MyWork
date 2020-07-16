@@ -55,7 +55,7 @@ public class TrackSpawner : MonoBehaviour
     }
     public void AddResetWeaponListener(UnityAction listener)
     {
-        print("coming here");
+
         resetWeapon.AddListener(listener);
     }
     void InstantiatePlayers() {
@@ -171,6 +171,7 @@ public class TrackSpawner : MonoBehaviour
         
     }
     void movePlayerListener(int stepsToMove) {
+        print("movePlayerListener");
         if (!ready) {
             return;
         }

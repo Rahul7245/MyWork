@@ -123,6 +123,7 @@
     <Compile Include="Assets\NavigationCustom\Project\Scripts\CustomAgent.cs" />
     <Compile Include="Assets\Scripts\TrackSpawner.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
+    <Compile Include="Assets\garage\SpawnEnemy.cs" />
     <None Include="Assets\Creator Kit - FPS\Art\Shaders\Fleisch.shader" />
     <None Include="Assets\Creator Kit - FPS\Art\Shaders\LiquidContent.shader" />
     <None Include="Assets\Creator Kit - FPS\Art\Shaders\MapShader.shader" />
