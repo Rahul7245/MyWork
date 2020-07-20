@@ -106,7 +106,7 @@ NavMeshSettings:
   m_BuildSettings:
     serializedVersion: 2
     agentTypeID: 0
-    agentRadius: 0.5
+    agentRadius: 0.2
     agentHeight: 2
     agentSlope: 45
     agentClimb: 0.4
@@ -114,13 +114,13 @@ NavMeshSettings:
     maxJumpAcrossDistance: 0
     minRegionArea: 2
     manualCellSize: 0
-    cellSize: 0.16666667
+    cellSize: 0.06666667
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: efe7bb8bbefd65248b00d2e476fcf8c0, type: 2}
 --- !u!1 &300433896 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9114194049139568168, guid: bef1b92e9dba93e46a08c01dc557fc8b,
@@ -270,10 +270,60 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2529021980413560962, guid: 89c0ceb573f58d048aad49875c082f19,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2529021980659886797, guid: 89c0ceb573f58d048aad49875c082f19,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2529021981469608477, guid: 89c0ceb573f58d048aad49875c082f19,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2529021981517946768, guid: 89c0ceb573f58d048aad49875c082f19,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2529021981603800169, guid: 89c0ceb573f58d048aad49875c082f19,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2529021981640697351, guid: 89c0ceb573f58d048aad49875c082f19,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2529021981650474510, guid: 89c0ceb573f58d048aad49875c082f19,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2529021981656223476, guid: 89c0ceb573f58d048aad49875c082f19,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5780661500844400390, guid: 89c0ceb573f58d048aad49875c082f19,
         type: 3}
       propertyPath: m_Name
       value: garage
+      objectReference: {fileID: 0}
+    - target: {fileID: 7336099025916656587, guid: 89c0ceb573f58d048aad49875c082f19,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7336099025958420042, guid: 89c0ceb573f58d048aad49875c082f19,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7377548032844082453, guid: 89c0ceb573f58d048aad49875c082f19,
         type: 3}
@@ -764,7 +814,9 @@ MonoBehaviour:
   - {fileID: 1569157083}
   - {fileID: 1898511784}
   - {fileID: 1076215167}
-  WalkableEn: []
+  WalkableEn:
+  - En1
+  - En3
   Envi: {fileID: 1259978072}
   EnParent: {fileID: 1344384605}
 --- !u!4 &1189302006

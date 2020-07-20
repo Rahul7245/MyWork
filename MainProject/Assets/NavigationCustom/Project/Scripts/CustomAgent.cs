@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class CustomAgent : MonoBehaviour
 {
-    public NavMeshAgent PlayerAgent;
+    public NavMeshAgent PlayerAgent; // Spawn single prefab with multiple properties 
     private int CurrDest = 0;
     private Animator anim;
     private bool isReached = false;
@@ -18,13 +18,16 @@ public class CustomAgent : MonoBehaviour
     public bool isWalkable = false;
     public Transform[] TargetPoint;
     public int[] PathPoints;
+    private int PrevIndex = 0;
+    SpawnEnemy spawnEnemy;
 
     private void Awake()
     {
-        PlayerAgent.isStopped = true;
         GoalParent = GameObject.FindGameObjectWithTag("Respawn").transform;
+        spawnEnemy = GameObject.FindObjectOfType<SpawnEnemy>();
         PlayerAgent.GetComponent<NavMeshAgent>();
-        anim = PlayerAgent.GetComponent<Animator>();
+        PlayerAgent.updateRotation = false; // Making this false as to rotate it manually
+        anim = this.GetComponent<Animator>();
         for (int i = 0; i < TargetPoint.Length; i++)
         {
             int index = PathPoints[i];
@@ -35,28 +38,25 @@ public class CustomAgent : MonoBehaviour
     void Start()
     {
         Check();
-        if (isWalkable)
-        {
-            PlayerAgent.isStopped = false;
-            anim.Play("Walk");
-            RestartRandom();
-            UniqueRandom();
-
-            PlayerAgent.destination = TargetPoint[CurrDest].position;
-        }
     }
 
     public void Check()
     {
+        RestartRandom();
         isWalkable = false;
-        int len=GameObject.Find("GameController").GetComponent<SpawnEnemy>().WalkableEn.Length;
+        int len=spawnEnemy.WalkableEn.Length;
         for (int i = 0; i < len; i++)
         {
-            if (GameObject.Find("GameController").GetComponent<SpawnEnemy>().WalkableEn[i] == EnName)
+            if (spawnEnemy.WalkableEn[i] == EnName)
             {
                 isWalkable = true;
             }
-        }    
+        }
+        if (isWalkable)
+        {
+            anim.Play("Walk");
+            UniqueRandom();
+        }
     }
 
     private void Update()
@@ -64,7 +64,7 @@ public class CustomAgent : MonoBehaviour
         if (!isWalkable)
             return;
 
-        if (!PlayerAgent.pathPending && PlayerAgent.remainingDistance < 0.5f && !isReached)
+        if (!PlayerAgent.pathPending && PlayerAgent.remainingDistance < 0.1f && !isReached)
         {
             isReached = true;
             GotoNextPoint();
@@ -81,6 +81,7 @@ public class CustomAgent : MonoBehaviour
 
     IEnumerator Delay()
     {
+        PlayerAgent.updateRotation = false;
         PlayerAgent.isStopped = true;
         anim.Play("Stand");
         yield return new WaitForSeconds(4f);
@@ -88,9 +89,15 @@ public class CustomAgent : MonoBehaviour
         PlayerAgent.isStopped = false;
         anim.Play("Walk");
         UniqueRandom();
-
-        PlayerAgent.destination = TargetPoint[CurrDest].position;
         isReached = false;
+    }
+
+    private void RotateTowards(Transform target) // Method to turn the navmesh agent manually in place
+    {
+        Vector3 direction = (target.position - transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(direction);
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 90);
+        PlayerAgent.updateRotation = true;
     }
 
     //Random number generation without repeating in loop 
@@ -105,11 +112,22 @@ public class CustomAgent : MonoBehaviour
 
     public void UniqueRandom()
     {
-        int index = Random.Range(0, NumberPool.Count);
-        CurrDest = NumberPool[index];
-        NumberPool.RemoveAt(index);
-        //Debug.Log(CurrDest);
         if (NumberPool.Count == 0)
             RestartRandom();
+        
+        int index = Random.Range(0, NumberPool.Count);
+        if (PrevIndex == index) //If Previous random number is same as present
+        {
+            UniqueRandom();
+        }
+        else
+        {
+            CurrDest = NumberPool[index];
+            NumberPool.RemoveAt(index);
+            PrevIndex = index;
+
+            PlayerAgent.destination = TargetPoint[CurrDest].position;
+            RotateTowards(TargetPoint[CurrDest]);
+        }
     }
 }
