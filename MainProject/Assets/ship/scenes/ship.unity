@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 28588760}
   m_Layer: 0
   m_Name: Waypoints
-  m_TagString: Respawn
+  m_TagString: SpawnPos
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -254,12 +254,6 @@ Transform:
   m_Father: {fileID: 393654231}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &112016318 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1977629919745204139, guid: 2f951c1ba96271f45b46b9de25a41f33,
-    type: 3}
-  m_PrefabInstance: {fileID: 290536839}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &135187879
 GameObject:
   m_ObjectHideFlags: 0
@@ -800,12 +794,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &530641312 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -5213433740966599822, guid: 2f951c1ba96271f45b46b9de25a41f33,
-    type: 3}
-  m_PrefabInstance: {fileID: 290536839}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &548590390
 GameObject:
   m_ObjectHideFlags: 0
@@ -2088,21 +2076,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8386dea776a14a74fb78f5b34af4ed04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Enemy:
-  - {fileID: 1953011894007122894, guid: d967e7a1d492e124398a9edf0cadf684, type: 3}
-  - {fileID: 765574681209467248, guid: 660247148d7afaf4d8d25ca4d62652ed, type: 3}
-  - {fileID: 5016458586365456080, guid: 5d977af79a54e8e4cb2805240f5c3943, type: 3}
-  - {fileID: 8450029582746441070, guid: 5fbc4cea413645948bb36c70cea2f36d, type: 3}
-  EneSpawnPos:
-  - {fileID: 112016318}
-  - {fileID: 262378477}
-  - {fileID: 969418670}
-  - {fileID: 530641312}
+  Enemy: {fileID: 1953011894007122894, guid: d967e7a1d492e124398a9edf0cadf684, type: 3}
+  SpawnPositions: {fileID: 0}
+  NoofEnemies: 5
+  spawnInstructions:
+  - Targetpoints: 0000000005000000
+    Name: Burgler_1
+  - Targetpoints: 0100000006000000
+    Name: Burgler_2
+  - Targetpoints: 0200000007000000
+    Name: Burgler_3
+  - Targetpoints: 0300000008000000
+    Name: Burgler_4
+  - Targetpoints: 0400000009000000
+    Name: Burgler_5
   WalkableEn:
-  - En1
-  - En4
-  Envi: {fileID: 290536844}
-  EnParent: {fileID: 1329288444148992497}
+  - Burgler_2
+  - Burgler_4
+  Environment: {fileID: 290536844}
 --- !u!1 &1329288444148992499
 GameObject:
   m_ObjectHideFlags: 0
@@ -2114,7 +2105,7 @@ GameObject:
   - component: {fileID: 1329288444148992497}
   - component: {fileID: 1329288444148992498}
   m_Layer: 0
-  m_Name: GameController
+  m_Name: Enemies
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

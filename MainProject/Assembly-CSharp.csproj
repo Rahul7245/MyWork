@@ -120,7 +120,8 @@
     <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModuleUI.cs" />
     <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModuleUnityVersion.cs" />
     <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModuleUtils.cs" />
-    <Compile Include="Assets\NavigationCustom\Project\Scripts\CustomAgent.cs" />
+    <Compile Include="Assets\Scripts\CustomAgent.cs" />
+    <Compile Include="Assets\Scripts\SpawnInstruction.cs" />
     <Compile Include="Assets\Scripts\TrackSpawner.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
     <Compile Include="Assets\garage\Scripts\SpawnEnemy.cs" />
