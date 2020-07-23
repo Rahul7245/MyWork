@@ -2,9 +2,22 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
+using System.Collections;
+using UnityEngine.UI;
+using System.Threading;
 
 public class SpawnEnemy : MonoBehaviour
 {
+    /// <summary>
+    /// Instance of track spawner
+    /// </summary>
+    public TrackSpawner trackSpawner;
+
+    /// <summary>
+    /// Instance of ImpactMAnager
+    /// </summary>
+    public ImpactManager impactManager;
+
     /// <summary>
     /// Enemy prefab to instantiate
     /// </summary>
@@ -35,14 +48,41 @@ public class SpawnEnemy : MonoBehaviour
     /// </summary>
     public GameObject Environment;
 
+    /// <summary>
+    /// Timerfilling image
+    /// </summary>
+    public Image timerFilling;
+
+    /// <summary>
+    /// Total time given for shooting
+    /// </summary>
+    public float TimeAmount = 10f;
+
+    /// <summary>
+    /// Variable to save current time temporarily
+    /// </summary>
+    public float tempTime;
+
+    /// <summary>
+    /// Text to show countdown
+    /// </summary>
+    public Text timeText;
+
+    /// <summary>
+    /// Clock
+    /// </summary>
+    public GameObject Clock;
+
     private void Awake()
     {
-        SpawnPositions = GameObject.FindGameObjectWithTag("SpawnPos");    
+        SpawnPositions = GameObject.FindGameObjectWithTag("SpawnPos");
+        trackSpawner = GameObject.FindObjectOfType<TrackSpawner>();
     }
 
     private void Start()
     {
-        Spawn();
+        Spawn(); 
+        tempTime = TimeAmount;
         EventManager.AddReloadWeapontListener(Reset);
         EventManager.AddShootListener(Hide);
     }
@@ -79,6 +119,8 @@ public class SpawnEnemy : MonoBehaviour
 
     private void Update()
     {
+        StartCoroutine(WaitAndCount());
+
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             Debug.Log("Pressed 1");
@@ -91,6 +133,35 @@ public class SpawnEnemy : MonoBehaviour
         }
     }
 
+    IEnumerator WaitAndCount()
+    {
+        if (trackSpawner.StartCountdown)
+        {
+            impactManager = GameObject.FindObjectOfType<ImpactManager>();
+            Clock.SetActive(true);
+            yield return new WaitForSeconds(0.5f);
+            if (tempTime > 0)
+            {
+                tempTime -= Time.deltaTime;
+                timerFilling.fillAmount = tempTime / TimeAmount;
+                timeText.text = tempTime.ToString("0");
+                if (timerFilling.fillAmount <= 0.25f) // when 3/4th of time filler is done shows alert color
+                    timerFilling.color = Color.red;
+            }
+            else
+            {
+                trackSpawner.StartCountdown = false;
+                timerFilling.fillAmount = 1;
+                tempTime = TimeAmount;
+                timerFilling.color = Color.green;
+                Clock.SetActive(false);
+
+                impactManager.InvokeTheEvent(0);
+                impactManager.OkButtonClicked();
+            }
+        }
+    }
+
     public void Hide(int integer)
     {
         //EnParent.gameObject.SetActive(false);
@@ -99,6 +170,10 @@ public class SpawnEnemy : MonoBehaviour
 
     public void Reset()
     {
+        timerFilling.fillAmount = 1;
+        tempTime = TimeAmount;
+        timerFilling.color = Color.green;
+        Clock.SetActive(false);
         //EnParent.gameObject.SetActive(true);
         //GameObject[] EnObjectArray = GameObject.FindGameObjectsWithTag("Burgler");
 

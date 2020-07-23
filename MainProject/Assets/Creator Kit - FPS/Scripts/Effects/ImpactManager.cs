@@ -109,5 +109,4 @@ public class ImpactManager : MonoBehaviour
         m_points = 0;
         
     }
-
 }

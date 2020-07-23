@@ -28,7 +28,8 @@ public class TrackSpawner : MonoBehaviour
     Dictionary<string, int> m_player_pos = new Dictionary<string, int>();
     Dictionary<string, Hurdle[]> m_player_pow = new Dictionary<string, Hurdle[]>();
     int turn;
-    bool ready, askingPlayer;
+    bool ready;
+    public bool StartCountdown = false, askingPlayer;
 
     ResetWeapon resetWeapon = new ResetWeapon();
     void Start()
@@ -286,6 +287,7 @@ public class TrackSpawner : MonoBehaviour
         gameObject.GetComponent<SwitchCamera>().ShootCameraEnable(true);
         Controller.Instance.DisplayCursor(false);
         resetWeapon.Invoke();
+        StartCountdown = true;
        // GameObject.FindGameObjectWithTag("Weapon").GetComponent<Weapon>().Reset();
     }
 
