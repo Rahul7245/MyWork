@@ -141,7 +141,7 @@ public class SpawnEnemy : MonoBehaviour
             Clock.SetActive(true);
             
             yield return new WaitForSeconds(0.5f);
-            if (tempTime > 0 && impactManager.m_points<=0)
+            if (tempTime > 0 && impactManager.m_points<=0 && !impactManager.ClipsizeText.activeInHierarchy)
             {
                 tempTime -= Time.deltaTime;
                 timerFilling.fillAmount = tempTime / TimeAmount;

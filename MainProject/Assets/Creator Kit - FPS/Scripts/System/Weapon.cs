@@ -12,7 +12,7 @@ using UnityEditor;
 public class Weapon : MonoBehaviour
 {
     static RaycastHit[] s_HitInfoBuffer = new RaycastHit[8];
-    
+    private ImpactManager impactManager;
     public enum TriggerType
     {
         Auto,
@@ -131,6 +131,7 @@ public class Weapon : MonoBehaviour
     public GameObject scopeOvrlay;
     void Awake()
     {
+        impactManager = GameObject.FindObjectOfType<ImpactManager>();
         scopeOvrlay = GameObject.FindGameObjectWithTag("scopeOverLay");
         if (scopeOvrlay) {
             scopeOvrlay.SetActive(false);
@@ -235,7 +236,9 @@ public class Weapon : MonoBehaviour
         m_ClipContent -= 1;
         if (m_ClipContent==0)
         {
-            Debug.Log("aaaaaaaaaaaaaaaaaaa Show poop-up");
+            impactManager.ClipsizeText.SetActive(true);
+
+            impactManager.InvokeTheEvent(impactManager.m_points);
         }
         m_ShotTimer = fireRate;
 
@@ -283,12 +286,11 @@ public class Weapon : MonoBehaviour
         if (Physics.Raycast(r, out hit, 1000.0f, ~(1 << 9), QueryTriggerInteraction.Ignore))
         {
             Renderer renderer = hit.collider.GetComponentInChildren<Renderer>();
-            ImpactManager im= ImpactManager.Instance;
             if (hit.transform.gameObject.tag == "Burgler")
             {
-                im.ImpactData(hit.point, hit.normal, renderer == null ? null : renderer.sharedMaterial);
+                impactManager.ImpactData(hit.point, hit.normal, renderer == null ? null : renderer.sharedMaterial);
                 int n = hit.transform.gameObject.GetComponent<Burgler>().getValue();
-                im.InvokeTheEvent(n);
+                impactManager.InvokeTheEvent(n);
             }
            
 
@@ -399,7 +401,7 @@ public class Weapon : MonoBehaviour
     public void Reset() {
         print("it is called");
         m_ClipContent=3;
-
+        impactManager.ClipsizeText.SetActive(false);
         if (AmmoDisplay)
             AmmoDisplay.UpdateAmount(m_ClipContent, clipSize);
         WeaponInfoUI.Instance.UpdateClipInfo(this);

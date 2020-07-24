@@ -23,6 +23,7 @@ public class ImpactManager : MonoBehaviour
     public ImpactSetting DefaultSettings;
     public ImpactSetting[] ImpactSettings;
     public GameObject PointsCanvas;
+    public GameObject ClipsizeText;
 
     Dictionary<Material, ImpactSetting> m_SettingLookup = new Dictionary<Material,ImpactSetting>();
 
