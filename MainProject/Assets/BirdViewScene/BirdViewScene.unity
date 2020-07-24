@@ -517,6 +517,7 @@ MonoBehaviour:
   no_of_hurdles: 3
   Ready_popup: {fileID: 1465936440}
   StartCountdown: 0
+  askingPlayer: 0
 --- !u!4 &722346531
 Transform:
   m_ObjectHideFlags: 0
@@ -5001,6 +5002,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8386dea776a14a74fb78f5b34af4ed04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  trackSpawner: {fileID: 0}
+  impactManager: {fileID: 0}
   Enemy: {fileID: 1953011894007122894, guid: d967e7a1d492e124398a9edf0cadf684, type: 3}
   SpawnPositions: {fileID: 0}
   NoofEnemies: 5
@@ -5021,6 +5024,7 @@ MonoBehaviour:
   Environment: {fileID: 5780661500018112455}
   timerFilling: {fileID: 2093872412951609606}
   TimeAmount: 10
+  tempTime: 0
   timeText: {fileID: 2093872412441373323}
   Clock: {fileID: 2093872413705431778}
 --- !u!4 &3403535230333840411

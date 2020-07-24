@@ -628,7 +628,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1953011894007122894}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bf39a418e337f6846b3dada588a7544e, type: 3}
   m_Name: 
@@ -646,7 +646,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cbc5440bd8e8ee4f85f5d4da6363520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerAgent: {fileID: 1953011894007122880}
   GoalPoints:
   - {fileID: 0}
   - {fileID: 0}

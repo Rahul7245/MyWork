@@ -233,7 +233,10 @@ public class Weapon : MonoBehaviour
             return;
         
         m_ClipContent -= 1;
-        
+        if (m_ClipContent==0)
+        {
+            Debug.Log("aaaaaaaaaaaaaaaaaaa Show poop-up");
+        }
         m_ShotTimer = fireRate;
 
         if(AmmoDisplay)
@@ -284,9 +287,8 @@ public class Weapon : MonoBehaviour
             if (hit.transform.gameObject.tag == "Burgler")
             {
                 im.ImpactData(hit.point, hit.normal, renderer == null ? null : renderer.sharedMaterial);
-
-                im.InvokeTheEvent(hit.transform.gameObject.GetComponent<Burgler>().getValue());
-
+                int n = hit.transform.gameObject.GetComponent<Burgler>().getValue();
+                im.InvokeTheEvent(n);
             }
            
 

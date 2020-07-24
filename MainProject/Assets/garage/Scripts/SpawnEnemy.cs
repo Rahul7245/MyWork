@@ -97,7 +97,7 @@ public class SpawnEnemy : MonoBehaviour
             GameObject Clone = Instantiate(Enemy, SpawnPositions.transform.GetChild(i).position,Quaternion.identity,this.transform);
             Clone.name = spawnInstructions[i].Name;
             //Adding Burger script with its value
-            Clone.AddComponent<Burgler>().m_value = i+1;
+            Clone.GetComponent<Burgler>().m_value = i+1;
 
             //Assigning waypoint for movement
             int length = spawnInstructions[i].Targetpoints.Count;
@@ -139,8 +139,9 @@ public class SpawnEnemy : MonoBehaviour
         {
             impactManager = GameObject.FindObjectOfType<ImpactManager>();
             Clock.SetActive(true);
+            
             yield return new WaitForSeconds(0.5f);
-            if (tempTime > 0)
+            if (tempTime > 0 && impactManager.m_points<=0)
             {
                 tempTime -= Time.deltaTime;
                 timerFilling.fillAmount = tempTime / TimeAmount;
@@ -155,9 +156,8 @@ public class SpawnEnemy : MonoBehaviour
                 tempTime = TimeAmount;
                 timerFilling.color = Color.green;
                 Clock.SetActive(false);
-
-                impactManager.InvokeTheEvent(0);
-                impactManager.OkButtonClicked();
+                impactManager.InvokeTheEvent(impactManager.m_points);
+                //impactManager.OkButtonClicked();
             }
         }
     }

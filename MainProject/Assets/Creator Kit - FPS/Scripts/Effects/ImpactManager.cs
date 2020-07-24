@@ -29,7 +29,7 @@ public class ImpactManager : MonoBehaviour
     Vector3 m_position;
     Vector3 m_normal; 
     Material m_material = null;
-    int m_points = 0;
+    public int m_points = 0;
     // Start is called before the first frame update
 
     ShotEvent shotEvent = new ShotEvent();
@@ -106,7 +106,6 @@ public class ImpactManager : MonoBehaviour
         PointsCanvas.SetActive(false);
         switchCameraEvent.Invoke(false);
         shotEvent.Invoke(m_points);
-        m_points = 0;
-        
+        m_points = 0;        
     }
 }
