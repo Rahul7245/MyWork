@@ -164,8 +164,11 @@ public class SpawnEnemy : MonoBehaviour
 
     public void Hide(int integer)
     {
-        //EnParent.gameObject.SetActive(false);
-        //Envi.SetActive(false);
+        for (int i = 0; i < NoofEnemies; i++)
+        {
+            this.transform.GetChild(i).position = this.transform.GetChild(i).GetComponent<CustomAgent>().GoalPoints[0].position;
+            this.transform.GetChild(i).gameObject.SetActive(false);
+        }
     }
 
     public void Reset()
@@ -174,13 +177,14 @@ public class SpawnEnemy : MonoBehaviour
         tempTime = TimeAmount;
         timerFilling.color = Color.green;
         Clock.SetActive(false);
-        //EnParent.gameObject.SetActive(true);
-        //GameObject[] EnObjectArray = GameObject.FindGameObjectsWithTag("Burgler");
 
-        //for (int i = 0; i < EnObjectArray.Length; i++)
-        //{
-        //    EnObjectArray[i].transform.position = EneSpawnPos[i].transform.position;
-        //}
-        //Envi.SetActive(true);
+        foreach (Transform child in this.transform)
+        {
+            child.transform.gameObject.SetActive(true);
+            if (child.GetComponent<CustomAgent>().isWalkable)
+            {
+                child.GetComponent<CustomAgent>().UniqueRandom();
+            }
+        }        
     }
 }

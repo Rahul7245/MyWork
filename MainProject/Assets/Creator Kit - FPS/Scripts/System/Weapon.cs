@@ -93,7 +93,7 @@ public class Weapon : MonoBehaviour
     public WeaponState CurrentState => m_CurrentState;
     public int ClipContent => m_ClipContent;
     public Controller Owner => m_Owner;
-
+    private int bvalue = 0;
     Controller m_Owner;
     
     Animator m_Animator;
@@ -273,7 +273,6 @@ public class Weapon : MonoBehaviour
 
     void RaycastShot()
     {
-
         //compute the ratio of our spread angle over the fov to know in viewport space what is the possible offset from center
         float spreadRatio = advancedSettings.spreadAngle / Controller.Instance.MainCamera.fieldOfView;
 
@@ -289,10 +288,12 @@ public class Weapon : MonoBehaviour
             if (hit.transform.gameObject.tag == "Burgler")
             {
                 impactManager.ImpactData(hit.point, hit.normal, renderer == null ? null : renderer.sharedMaterial);
-                int n = hit.transform.gameObject.GetComponent<Burgler>().getValue();
-                impactManager.InvokeTheEvent(n);
-            }
-           
+                Burgler burgler = hit.transform.gameObject.GetComponent<Burgler>();
+                CustomAgent customAgent = hit.transform.gameObject.GetComponent<CustomAgent>();
+                bvalue = burgler.getValue();
+                customAgent.DieEffect();
+                StartCoroutine(DelayPopup());
+            }           
 
             //if too close, the trail effect would look weird if it arced to hit the wall, so only correct it if far
             if (hit.distance > 5.0f)
@@ -336,6 +337,12 @@ public class Weapon : MonoBehaviour
                 renderer = trail
             });
         }*/
+    }
+
+    IEnumerator DelayPopup()
+    {
+        yield return new WaitForSeconds(2f);
+        impactManager.InvokeTheEvent(bvalue);
     }
 
     void ProjectileShot()

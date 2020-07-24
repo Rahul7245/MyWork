@@ -118,6 +118,7 @@ public class CustomAgent : MonoBehaviour
             RestartRandom();
 
         int index = Random.Range(0, NumberPool.Count);
+        anim.Play("Walk");
         if (PrevIndex == index) //If Previous random number is same as present
         {
             UniqueRandom();
@@ -131,5 +132,11 @@ public class CustomAgent : MonoBehaviour
             PlayerAgent.destination = GoalPoints[CurrRandomIndex].position;
             RotateTowards(GoalPoints[CurrRandomIndex]);
         }
+    }
+
+    public void DieEffect()
+    {
+        anim.Play("Dying");
+        PlayerAgent.isStopped = true;
     }
 }
