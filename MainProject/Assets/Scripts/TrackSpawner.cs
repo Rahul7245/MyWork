@@ -31,6 +31,7 @@ public class TrackSpawner : MonoBehaviour
     bool ready, askingPlayer;
 
     ResetWeapon resetWeapon = new ResetWeapon();
+    float trackDistance = 3.8f;
     void Start()
     {
          InstantiateTrack();
@@ -64,7 +65,7 @@ public class TrackSpawner : MonoBehaviour
             GameObject[] obj = null;
             if (m_tracks.TryGetValue("player_" + i + "_Track", out obj))
             {
-                GameObject pl = Instantiate(player, obj[0].transform.position + new Vector3(0, .21f, 0), Quaternion.identity);
+                GameObject pl = Instantiate(player, obj[0].transform.position + new Vector3(0, 1.22f, 0), Quaternion.identity);
                 pl.name = "player_" + i;
                 m_players.Add("player_" + i, pl);
                 m_player_pos.Add("player_" + i, 0);
@@ -84,7 +85,7 @@ public class TrackSpawner : MonoBehaviour
             GameObject playerTrack = new GameObject("player_" + j + "_Track");
             // Instantiate(playerTrack);
             Vector3 pos = new Vector3(0, 0, 0);
-            GameObject st = Instantiate(startPoint, pos + new Vector3(j * 3, 0, 0), Quaternion.identity);
+            GameObject st = Instantiate(startPoint, pos + new Vector3(j * 6, 0, 0), Quaternion.identity);
             pos = st.transform.position;
             st.transform.parent = playerTrack.transform;
             st.name = "start_pos_" + j;
@@ -92,7 +93,7 @@ public class TrackSpawner : MonoBehaviour
            Hurdle[] hurdles= RandomPowerPosition(j);
             for (int i = 1; i <= 21; i++)
             {
-                GameObject tc = Instantiate(trackCube, pos + new Vector3(0, 0, i * 2), Quaternion.identity);
+                GameObject tc = Instantiate(trackCube, pos + new Vector3(0, 0, i * trackDistance), Quaternion.identity);
                 tc.transform.parent = playerTrack.transform;
                 tc.name = "block_" + i;
                 playerTrackArr[i] = tc;
@@ -100,11 +101,11 @@ public class TrackSpawner : MonoBehaviour
             foreach(var hurdle in hurdles) {
                 GameObject tc=null;
                 if (hurdle.power % 2 == 1) {
-                     tc = Instantiate(powerCube, pos + new Vector3(0, 0, hurdle.pos * 2), Quaternion.identity);
+                     tc = Instantiate(powerCube, pos + new Vector3(0, 0, hurdle.pos * trackDistance), Quaternion.identity);
                 }
                 else if (hurdle.power % 2 == 0)
                 {
-                     tc = Instantiate(hurdleCube, pos + new Vector3(0, 0, hurdle.pos * 2), Quaternion.identity);
+                     tc = Instantiate(hurdleCube, pos + new Vector3(0, 0, hurdle.pos * trackDistance), Quaternion.identity);
                 }
                 if (tc)
                 {
@@ -245,19 +246,19 @@ public class TrackSpawner : MonoBehaviour
         if (movingForward)
         {
             current_Player.transform.GetComponent<Rigidbody>().DOMove(
-            track[pos].transform.position + new Vector3(0, .21f, 0), (float)steps).OnStart(() =>
+            track[pos].transform.position + new Vector3(0, 1.22f, 0), (float)steps+.5f).OnStart(() =>
            {
-               current_Player.GetComponent<Animator>().SetBool("walk", true);
+               current_Player.GetComponent<Animator>().SetBool("jump", true);
           //     print("Animation started");
            }).OnComplete(() =>
            {
-               current_Player.GetComponent<Animator>().SetBool("walk", false);
+               current_Player.GetComponent<Animator>().SetBool("jump", false);
                ready = true;
            }).SetEase(curve);
             StartCoroutine(animationtimer(playerNumber, pos, current_Player));
         }
         else {
-           StartCoroutine( animationFall(track[pos].transform.position + new Vector3(0, .21f, 0), current_Player));
+           StartCoroutine( animationFall(track[pos].transform.position + new Vector3(0, 1.22f, 0), current_Player));
         }
         
         m_player_pos.Remove("player_" + playerNumber);
@@ -276,7 +277,7 @@ public class TrackSpawner : MonoBehaviour
     }
     IEnumerator animationtimer(int playerNumber,int currentPosition, GameObject current_Player) {
         yield return new WaitForSeconds(.5f);
-        yield return new WaitWhile(() => current_Player.GetComponent<Animator>().GetBool("walk") == true);
+        yield return new WaitWhile(() => current_Player.GetComponent<Animator>().GetBool("jump") == true);
         yield return new WaitForSeconds(1f);
        CheckForHurdle(playerNumber, currentPosition);
 

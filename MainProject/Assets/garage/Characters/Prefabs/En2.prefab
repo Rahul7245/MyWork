@@ -191,6 +191,7 @@ GameObject:
   - component: {fileID: 765574681209467263}
   - component: {fileID: 765574681209467260}
   - component: {fileID: 6992305541000404778}
+  - component: {fileID: 8334203763355625011}
   m_Layer: 0
   m_Name: En2
   m_TagString: Burgler
@@ -422,6 +423,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_value: 2
+--- !u!136 &8334203763355625011
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 765574681209467248}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.51166254
+  m_Height: 3.4300618
+  m_Direction: 1
+  m_Center: {x: -0.014131182, y: 2.1516526, z: 0.07206568}
 --- !u!1 &873799340072025197
 GameObject:
   m_ObjectHideFlags: 0

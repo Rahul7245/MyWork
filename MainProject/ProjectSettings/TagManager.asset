@@ -8,6 +8,7 @@ TagManager:
   - WeaponCamera
   - Burgler
   - Weapon
+  - Enabled
   layers:
   - Default
   - TransparentFX
