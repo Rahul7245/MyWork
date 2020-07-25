@@ -75,3 +75,4 @@ sysinfo.txt
 .json.meta
 /Logs/*.log
 /Out
+*.csproj
