@@ -32,6 +32,7 @@ public class TrackSpawner : MonoBehaviour
 
     ResetWeapon resetWeapon = new ResetWeapon();
     float trackDistance = 3.8f;
+    float characterYaxisOffset = 0.7f;
     void Start()
     {
          InstantiateTrack();
@@ -65,7 +66,7 @@ public class TrackSpawner : MonoBehaviour
             GameObject[] obj = null;
             if (m_tracks.TryGetValue("player_" + i + "_Track", out obj))
             {
-                GameObject pl = Instantiate(player, obj[0].transform.position + new Vector3(0, 1.22f, 0), Quaternion.identity);
+                GameObject pl = Instantiate(player, obj[0].transform.position + new Vector3(0, characterYaxisOffset, 0), Quaternion.identity);
                 pl.name = "player_" + i;
                 m_players.Add("player_" + i, pl);
                 m_player_pos.Add("player_" + i, 0);
@@ -85,7 +86,7 @@ public class TrackSpawner : MonoBehaviour
             GameObject playerTrack = new GameObject("player_" + j + "_Track");
             // Instantiate(playerTrack);
             Vector3 pos = new Vector3(0, 0, 0);
-            GameObject st = Instantiate(startPoint, pos + new Vector3(j * 6, 0, 0), Quaternion.identity);
+            GameObject st = Instantiate(startPoint, pos + new Vector3(j * 3, 0, 0), Quaternion.identity);
             pos = st.transform.position;
             st.transform.parent = playerTrack.transform;
             st.name = "start_pos_" + j;
@@ -246,7 +247,7 @@ public class TrackSpawner : MonoBehaviour
         if (movingForward)
         {
             current_Player.transform.GetComponent<Rigidbody>().DOMove(
-            track[pos].transform.position + new Vector3(0, 1.22f, 0), (float)steps+.5f).OnStart(() =>
+            track[pos].transform.position + new Vector3(0, characterYaxisOffset, 0), (float)steps+.5f).OnStart(() =>
            {
                current_Player.GetComponent<Animator>().SetBool("jump", true);
           //     print("Animation started");
@@ -258,7 +259,7 @@ public class TrackSpawner : MonoBehaviour
             StartCoroutine(animationtimer(playerNumber, pos, current_Player));
         }
         else {
-           StartCoroutine( animationFall(track[pos].transform.position + new Vector3(0, 1.22f, 0), current_Player));
+           StartCoroutine( animationFall(track[pos].transform.position + new Vector3(0, characterYaxisOffset, 0), current_Player));
         }
         
         m_player_pos.Remove("player_" + playerNumber);
