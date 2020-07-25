@@ -46,6 +46,11 @@ public class CustomAgent : MonoBehaviour
     /// </summary>
     private bool isReached = false;
 
+    /// <summary>
+    /// current index value
+    /// </summary>
+    public int indexvalue = 0;
+
     private void Awake()
     {
         PlayerAgent = this.GetComponent<NavMeshAgent>();
@@ -60,12 +65,12 @@ public class CustomAgent : MonoBehaviour
 
     public void Check()
     {
-        RestartRandom();
+        //RestartRandom();
 
         if (isWalkable)
         {
-            anim.Play("Walk");
-            UniqueRandom();
+            //UniqueRandom();
+            AnimateCharacter();
         }
     }
 
@@ -78,6 +83,8 @@ public class CustomAgent : MonoBehaviour
         {
             isReached = true;
             StartCoroutine(GotoNextPoint());
+            if (indexvalue >= GoalPoints.Length)
+                PlayerAgent.isStopped = true;
         }
     }
 
@@ -86,11 +93,12 @@ public class CustomAgent : MonoBehaviour
         PlayerAgent.updateRotation = false;
         PlayerAgent.isStopped = true;
         anim.Play("Stand");
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(0.1f);
 
         PlayerAgent.isStopped = false;
         anim.Play("Walk");
-        UniqueRandom();
+        //UniqueRandom();
+        AnimateCharacter();
         isReached = false;
     }
 
@@ -112,26 +120,49 @@ public class CustomAgent : MonoBehaviour
         }
     }
 
-    public void UniqueRandom()
+    //public void UniqueRandom()
+    //{
+    //    if (NumberPool.Count == 0)
+    //        RestartRandom();
+
+    //    int index = Random.Range(0, NumberPool.Count);
+    //    anim.Play("Walk");
+    //    if (PrevIndex == index) //If Previous random number is same as present
+    //    {
+    //        UniqueRandom();
+    //    }
+    //    else
+    //    {
+    //        CurrRandomIndex = NumberPool[index];
+    //        NumberPool.RemoveAt(index);
+    //        PrevIndex = index;
+
+    //        PlayerAgent.destination = GoalPoints[CurrRandomIndex].position;
+    //        RotateTowards(GoalPoints[CurrRandomIndex]);
+    //    }
+    //}
+
+    public void AnimateCharacter()
     {
-        if (NumberPool.Count == 0)
-            RestartRandom();
+        indexvalue++;
+        if (indexvalue < GoalPoints.Length)
+            StartCoroutine(ManageAnimations());
+    }
 
-        int index = Random.Range(0, NumberPool.Count);
+    IEnumerator ManageAnimations()
+    {
+        PlayerAgent.speed = 1f;
+        PlayerAgent.destination = GoalPoints[indexvalue].position;
+        RotateTowards(GoalPoints[indexvalue]);
         anim.Play("Walk");
-        if (PrevIndex == index) //If Previous random number is same as present
-        {
-            UniqueRandom();
-        }
-        else
-        {
-            CurrRandomIndex = NumberPool[index];
-            NumberPool.RemoveAt(index);
-            PrevIndex = index;
 
-            PlayerAgent.destination = GoalPoints[CurrRandomIndex].position;
-            RotateTowards(GoalPoints[CurrRandomIndex]);
-        }
+        yield return new WaitForSeconds(2f);
+        PlayerAgent.speed = 0f;
+        anim.Play("LookBack");
+
+        yield return new WaitForSeconds(2f);
+
+        PlayerAgent.speed = 3.5f;
     }
 
     public void DieEffect()

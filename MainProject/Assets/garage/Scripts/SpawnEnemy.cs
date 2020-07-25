@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using UnityEngine.UI;
 using System.Threading;
+using UnityEngine.AI;
 
 public class SpawnEnemy : MonoBehaviour
 {
@@ -101,6 +102,7 @@ public class SpawnEnemy : MonoBehaviour
 
             //Assigning waypoint for movement
             int length = spawnInstructions[i].Targetpoints.Count;
+            Clone.GetComponent<CustomAgent>().enabled = false;
 
             for (int j = 0; j < length; j++)
             {
@@ -139,7 +141,11 @@ public class SpawnEnemy : MonoBehaviour
         {
             impactManager = GameObject.FindObjectOfType<ImpactManager>();
             Clock.SetActive(true);
-            
+            for (int i = 0; i < NoofEnemies; i++)
+            {
+                this.transform.GetChild(i).GetComponent<CustomAgent>().enabled = true; 
+            }
+
             yield return new WaitForSeconds(0.5f);
             if (tempTime > 0 && impactManager.m_points<=0 && !impactManager.ClipsizeText.activeInHierarchy)
             {
@@ -168,6 +174,7 @@ public class SpawnEnemy : MonoBehaviour
         {
             this.transform.GetChild(i).position = this.transform.GetChild(i).GetComponent<CustomAgent>().GoalPoints[0].position;
             this.transform.GetChild(i).gameObject.SetActive(false);
+            this.transform.GetChild(i).GetComponent<CustomAgent>().indexvalue = 0;
         }
     }
 
@@ -183,7 +190,7 @@ public class SpawnEnemy : MonoBehaviour
             child.transform.gameObject.SetActive(true);
             if (child.GetComponent<CustomAgent>().isWalkable)
             {
-                child.GetComponent<CustomAgent>().UniqueRandom();
+                child.GetComponent<CustomAgent>().AnimateCharacter();
             }
         }        
     }
