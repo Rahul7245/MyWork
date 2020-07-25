@@ -49,7 +49,9 @@ public class TrackSpawner : MonoBehaviour
         turn = 1;
         ready = true;
         askingPlayer = true;
-        Ready_popup.GetComponentInChildren<Text>().text = "Are you Ready Player_"+turn;
+        StartCoroutine(startGame());
+    
+        //Ready_popup.GetComponentInChildren<Text>().text = "Are you Ready Player_"+turn;
         EventManager.AddShootListener(movePlayerListener);
         EventManager.AddReloadWeaponInvoker(this);
         
@@ -165,12 +167,20 @@ public class TrackSpawner : MonoBehaviour
     {
         if (ready&&!askingPlayer)
         {
-            Ready_popup.GetComponentInChildren<Text>().text = "Are you Ready Player_" + turn;
-            Ready_popup.gameObject.SetActive(true);
-            askingPlayer = true;
+            StartCoroutine(startGame());
         }
         
     }
+
+    IEnumerator startGame()
+    {
+        Ready_popup.GetComponentInChildren<Text>().text = "Are you Ready Player_" + turn;
+        Ready_popup.gameObject.SetActive(true);
+        askingPlayer = true;
+        yield return new WaitForSeconds(3f);
+        ReadyButtonPressed();
+    }
+
     void movePlayerListener(int stepsToMove) {
         print("movePlayerListener");
         if (!ready) {
